@@ -1,0 +1,42 @@
+{% extends 'flatpages/default.html' %} {% block title %} Product list {% endblock title %} {% block content %}
+
+
+<!-- Перед таблицей добавим форму для поиска -->
+<form method="GET">
+    {{ filter.form }}
+    <!-- Форму от фильтров за нас сделает Django. А вот кнопку, увы, придётся делать самому -->
+    <input type="submit" value="Найти">
+</form>
+
+<table>
+    <thead>
+        <!-- <th>
+            Date
+        </th> -->
+        <th>
+            Author
+        </th>
+        <th>
+            Category
+        </th>
+        <th>
+            Title
+        </th>
+    </thead>
+    {% for new in filter.qs %}
+    <!-- поменяем products на filter.qs, т.к. теперь мы забираем уже отобранную по каким-то параметрам информацию -->
+    <tr>
+        <!-- <td>
+            {{ new.dateCreation }}
+        </td> -->
+        <td>
+            {{ new.author }}
+        </td>
+        <td>
+            {{ new.category.name|title }}
+        </td>
+        <td>
+            {{ new.text|truncatewords:30 }}
+        </td>
+    </tr>
+    {% endfor %} {% endblock content %}
